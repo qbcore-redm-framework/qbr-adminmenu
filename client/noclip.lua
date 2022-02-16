@@ -160,6 +160,6 @@ AddEventHandler('onResourceStop', function(resourceName)
     end
 end)
 
-RegisterNetEvent('qb-admin:client:ToggleNoClip', function()
+RegisterNetEvent('qbr-admin:client:ToggleNoClip', function()
     ToggleNoClipMode()
 end)
