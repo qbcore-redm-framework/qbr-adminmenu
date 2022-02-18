@@ -2,34 +2,29 @@ fx_version 'cerulean'
 game 'rdr3'
 rdr3_warning 'I acknowledge that this is a prerelease build of RedM, and I am aware my resources *will* become incompatible once RedM ships.'
 
-description 'QBR-AdminMenu'
+description "RedM Admin Menu (QBR)"
+author ".dough#0001"
 version '1.0.0'
+repository 'https://github.com/dough-land/'
 
 ui_page 'html/index.html'
 
 shared_scripts {
-    '@qbr-core/shared/locale.lua',
-    'locales/en.lua', -- Change to the language you want
+	'@qbr-core/shared/locale.lua',
+	'locales/en.lua',
+  'shared/config.lua'
 }
 
 client_scripts {
-    '@menuv/menuv.lua',
-    'client/noclip.lua',
-    'client/blipsnames.lua',
-    'client/client.lua',
-    'client/events.lua'
+  '@menuv/menuv.lua',
+  'client/main.lua',
+  'client/noclip.lua',
+  'client/events.lua',
 }
 
-server_scripts {
-    '@oxmysql/lib/MySQL.lua',
-    'server/server.lua'
+files {
+  'html/index.html',
+  'html/index.js'
 }
 
-files { -- Credits to https://github.com/LVRP-BEN/bl_coords for clipboard copy method
-    'html/index.html',
-    'html/index.js'
-}
-
-dependency 'menuv'
-
-lua54 'yes'
+server_script 'server/main.lua'
