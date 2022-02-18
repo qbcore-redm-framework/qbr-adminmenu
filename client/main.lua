@@ -6,6 +6,7 @@ local Invisible = false
 local Godmode = false
 local LastSpectateCoord = nil 
 local IsSpectating = false
+local deleteLazer = false
 
 local menuLocation = 'topright'
 local menuSize = 'size-125'
@@ -363,6 +364,15 @@ developerOptions:On('open', function(menu)
     label = Lang:t('menu.copy_heading'),
     select = function(btn)
       CopyToClipboard('heading')
+    end
+  })
+  menu:AddCheckbox({
+    icon = '🔫',
+    value = nil,
+    label = Lang:t('menu.delete_lazer'),
+    change = function(btn)
+      deletelazer = not deletelazer
+      print('Coming Soon..')
     end
   })
 end)
