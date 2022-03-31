@@ -18,7 +18,7 @@ local permissions = {
   ['perms'] = 'god',
 }
 
-QBCore.Commands.Add('admin', 'Open the admin menu (Admin Only)', {}, false, function(source)
+exports['qbr-core']:AddCommand('admin', 'Open the admin menu (Admin Only)', {}, false, function(source)
   local src = source
   TriggerClientEvent('admin:client:OpenMenu', src)
 end, 'admin')
@@ -101,7 +101,7 @@ RegisterNetEvent('admin:server:kick', function(player, reason)
   local src = source
   if exports['qbr-core']:HasPermission(src, permissions['kick']) or IsPlayerAceAllowed(src, 'command') then
     TriggerEvent('qb-log:server:CreateLog', 'bans', 'Player Kicked', 'red', string.format('%s was kicked by %s for %s', GetPlayerName(player.id), GetPlayerName(src), reason), true)
-    DropPlayer(player.id, Lang:t("info.kicked_server") .. ':\n' .. reason .. '\n\n' .. Lang:t("info.check_discord") .. QBCore.Config.Server.discord)
+    DropPlayer(player.id, Lang:t("info.kicked_server") .. ':\n' .. reason .. '\n\n' .. Lang:t("info.check_discord") .. exports['qbr-core']:GetConfig().Server.discord)
   end
 end)
 
@@ -164,9 +164,9 @@ RegisterNetEvent('admin:server:ban', function(player, time, reason)
 
     TriggerEvent('qb-log:server:CreateLog', 'bans', 'Player Banned', 'red', string.format('%s was banned by %s for %s', GetPlayerName(player.id), GetPlayerName(src), reason), true)
       if banTime >= 2147483647 then
-        DropPlayer(player.id, Lang:t("info.banned") .. '\n' .. reason .. Lang:t("info.ban_perm") .. QBCore.Config.Server.discord)
+        DropPlayer(player.id, Lang:t("info.banned") .. '\n' .. reason .. Lang:t("info.ban_perm") .. exports['qbr-core']:GetConfig().Server.discord)
       else
-        DropPlayer(player.id, Lang:t("info.banned") .. '\n' .. reason .. Lang:t("info.ban_expires") .. timeTable['day'] .. '/' .. timeTable['month'] .. '/' .. timeTable['year'] .. ' ' .. timeTable['hour'] .. ':' .. timeTable['min'] .. '\n🔸 Check our Discordformore information: ' .. QBCore.Config.Server.discord)
+        DropPlayer(player.id, Lang:t("info.banned") .. '\n' .. reason .. Lang:t("info.ban_expires") .. timeTable['day'] .. '/' .. timeTable['month'] .. '/' .. timeTable['year'] .. ' ' .. timeTable['hour'] .. ':' .. timeTable['min'] .. '\n🔸 Check our Discordformore information: ' .. exports['qbr-core']:GetConfig().Server.discord)
       end
   end
 end)
