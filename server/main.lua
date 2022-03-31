@@ -1,4 +1,4 @@
-local QBCore = exports['qbr-core']:GetCoreObject()
+
 
 local frozen = false
 
@@ -23,28 +23,28 @@ QBCore.Commands.Add('admin', 'Open the admin menu (Admin Only)', {}, false, func
   TriggerClientEvent('admin:client:OpenMenu', src)
 end, 'admin')
 
-QBCore.Functions.CreateCallback('admin:server:hasperms', function(source, cb, action)
+exports['qbr-core']:CreateCallback('admin:server:hasperms', function(source, cb, action)
   local src = source
-  if QBCore.Functions.HasPermission(src, permissions[action]) or IsPlayerAceAllowed(src, 'command') then
+  if exports['qbr-core']:HasPermission(src, permissions[action]) or IsPlayerAceAllowed(src, 'command') then
       cb(true)
   else
       cb(false)
   end
 end)
 
-QBCore.Functions.CreateCallback('admin:server:getplayers', function(source, cb)
+exports['qbr-core']:CreateCallback('admin:server:getplayers', function(source, cb)
   local src = source
   local players = {}
-  for k,v in pairs(QBCore.Functions.GetPlayers()) do 
+  for k,v in pairs(exports['qbr-core']:GetPlayers()) do
     local target = GetPlayerPed(v)
-    local ped = QBCore.Functions.GetPlayer(v)
+    local ped = exports['qbr-core']:GetPlayer(v)
     players[#players + 1] = {
       name = ped.PlayerData.charinfo.firstname .. ' ' .. ped.PlayerData.charinfo.lastname .. ' | (' .. GetPlayerName(v) .. ')',
       id = v,
       coords = GetEntityCoords(target),
       citizenid = ped.PlayerData.citizenid,
       sources = GetPlayerPed(ped.PlayerData.source),
-      sourceplayer = ped.PlayerData.source 
+      sourceplayer = ped.PlayerData.source
     }
   end
 
@@ -58,16 +58,16 @@ end)
 RegisterNetEvent('admin:server:getPlayersForBlips', function()
   local src = source
   local players = {}
-  for k,v in pairs(QBCore.Functions.GetPlayers()) do 
+  for k,v in pairs(exports['qbr-core']:GetPlayers()) do
     local target = GetPlayerPed(v)
-    local ped = QBCore.Functions.GetPlayer(v)
+    local ped = exports['qbr-core']:GetPlayer(v)
     players[#players + 1] = {
       name = ped.PlayerData.charinfo.firstname .. ' ' .. ped.PlayerData.charinfo.lastname .. ' | ' .. GetPlayerName(v),
       id = v,
       coords = GetEntityCoords(target),
       citizenid = ped.PlayerData.citizenid,
       sources = GetPlayerPed(ped.PlayerData.source),
-      sourceplayer = ped.PlayerData.source 
+      sourceplayer = ped.PlayerData.source
     }
   end
 
@@ -76,14 +76,14 @@ end)
 
 RegisterNetEvent('admin:server:kill', function(player)
   local src = source
-  if QBCore.Functions.HasPermission(src, permissions['kill']) or IsPlayerAceAllowed(src, 'command') then
+  if exports['qbr-core']:HasPermission(src, permissions['kill']) or IsPlayerAceAllowed(src, 'command') then
     TriggerClientEvent('hospital:client:KillPlayer', player.id)
   end
 end)
 
 RegisterNetEvent('admin:server:revive', function(player)
   local src = source
-  if QBCore.Functions.HasPermission(src, permissions['revive']) or IsPlayerAceAllowed(src, 'command') then
+  if exports['qbr-core']:HasPermission(src, permissions['revive']) or IsPlayerAceAllowed(src, 'command') then
     -- TriggerClientEvent('hospital:client:KillPlayer', player.id)
     TriggerClientEvent('admin:client:revivePlayer', player.id)
   end
@@ -91,7 +91,7 @@ end)
 
 RegisterNetEvent('admin:server:heal', function(player)
   local src = source
-  if QBCore.Functions.HasPermission(src, permissions['heal']) or IsPlayerAceAllowed(src, 'command') then
+  if exports['qbr-core']:HasPermission(src, permissions['heal']) or IsPlayerAceAllowed(src, 'command') then
     -- TriggerClientEvent('hospital:client:KillPlayer', player.id)
     TriggerClientEvent('admin:client:healPlayer', player.id)
   end
@@ -99,7 +99,7 @@ end)
 
 RegisterNetEvent('admin:server:kick', function(player, reason)
   local src = source
-  if QBCore.Functions.HasPermission(src, permissions['kick']) or IsPlayerAceAllowed(src, 'command') then
+  if exports['qbr-core']:HasPermission(src, permissions['kick']) or IsPlayerAceAllowed(src, 'command') then
     TriggerEvent('qb-log:server:CreateLog', 'bans', 'Player Kicked', 'red', string.format('%s was kicked by %s for %s', GetPlayerName(player.id), GetPlayerName(src), reason), true)
     DropPlayer(player.id, Lang:t("info.kicked_server") .. ':\n' .. reason .. '\n\n' .. Lang:t("info.check_discord") .. QBCore.Config.Server.discord)
   end
@@ -107,7 +107,7 @@ end)
 
 RegisterNetEvent('admin:server:goto', function(player)
   local src = source
-  if QBCore.Functions.HasPermission(src, permissions['goto']) or IsPlayerAceAllowed(src, 'command') then
+  if exports['qbr-core']:HasPermission(src, permissions['goto']) or IsPlayerAceAllowed(src, 'command') then
     local target = GetPlayerPed(player.id)
     local targetCoords = GetEntityCoords(target)
     TriggerClientEvent('admin:client:spectate', src, player.id, coords)
@@ -116,7 +116,7 @@ end)
 
 RegisterNetEvent('admin:server:spectate', function(player)
   local src = source
-  if QBCore.Functions.HasPermission(src, permissions['spectate']) or IsPlayerAceAllowed(src, 'command') then
+  if exports['qbr-core']:HasPermission(src, permissions['spectate']) or IsPlayerAceAllowed(src, 'command') then
     local admin = GetPlayerPed(src)
     local target = GetEntityCoords(GetPlayerPed(player.id))
     SetEntityCoords(admin, target)
@@ -125,13 +125,13 @@ end)
 
 RegisterNetEvent('admin:server:freeze', function(player)
   local src = source
-  if QBCore.Functions.HasPermission(src, permissions['freeze']) or IsPlayerAceAllowed(src, 'command') then
+  if exports['qbr-core']:HasPermission(src, permissions['freeze']) or IsPlayerAceAllowed(src, 'command') then
     local target = GetPlayerPed(player.id)
-    if not frozen then 
-      frozen = true 
+    if not frozen then
+      frozen = true
       FreezeEntityPosition(target, true)
     else
-      frozen = false 
+      frozen = false
       FreezeEntityPosition(target, false)
     end
   end
@@ -139,19 +139,19 @@ end)
 
 RegisterNetEvent('admin:server:ban', function(player, time, reason)
   local src = source
-  if QBCore.Functions.HasPermission(src, permissions['ban']) or IsPlayerAceAllowed(src, 'command') then 
+  if exports['qbr-core']:HasPermission(src, permissions['ban']) or IsPlayerAceAllowed(src, 'command') then
     local time = tonumber(time)
     local banTime = tonumber(os.time() + time)
-    if banTime > 2147483647 then 
-      banTime = 2147483647 
+    if banTime > 2147483647 then
+      banTime = 2147483647
     end
     local timeTable = os.date('*t', banTime)
 
     MySQL.Async.insert('INSERT INTO bans (name, license, discord, ip, reason, expire, bannedby) VALUES (?, ?, ?, ?, ?, ?, ?)', {
       GetPlayerName(player.id),
-      QBCore.Functions.GetIdentifier(player.id, 'license'),
-      QBCore.Functions.GetIdentifier(player.id, 'discord'),
-      QBCore.Functions.GetIdentifier(player.id, 'ip'),
+      exports['qbr-core']:GetIdentifier(player.id, 'license'),
+      exports['qbr-core']:GetIdentifier(player.id, 'discord'),
+      exports['qbr-core']:GetIdentifier(player.id, 'ip'),
       reason,
       banTime,
       GetPlayerName(src)

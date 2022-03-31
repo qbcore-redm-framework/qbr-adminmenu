@@ -1,10 +1,10 @@
-local QBCore = exports['qbr-core']:GetCoreObject()
+
 -- local MenuData = exports['ow-menubase']:GetMenus()
 
 local ShowingCoords = false
 local Invisible = false
 local Godmode = false
-local LastSpectateCoord = nil 
+local LastSpectateCoord = nil
 local IsSpectating = false
 local deleteLazer = false
 
@@ -72,7 +72,7 @@ adminOptions:On('open', function(menu)
     label = Lang:t('menu.invisible'),
     select = function()
       TriggerServerEvent('qbr-logs:server:CreateLog', 'admin', 'Admin Options', 'red', GetPlayerName() .. ' toggled > INVISIBILITY <')
-      if Invisible then  
+      if Invisible then
         SetEntityVisible(PlayerPedId(), true)
         Invisible = false
       else
@@ -87,8 +87,8 @@ adminOptions:On('open', function(menu)
     select = function()
       Godmode = not Godmode
       TriggerServerEvent('qbr-logs:server:CreateLog', 'admin', 'Admin Options', 'red', GetPlayerName() .. ' toggled > GODMODE <')
-      if Godmode then 
-        while Godmode do 
+      if Godmode then
+        while Godmode do
           Wait(0)
           SetPlayerInvincible(PlayerPedId(), true)
         end
@@ -108,14 +108,14 @@ end)
 
 playerOptions:On('open', function(menu)
   menu:ClearItems()
-  QBCore.Functions.TriggerCallback('admin:server:getplayers', function(players)
-    for k,v in pairs(players) do 
+  exports['qbr-core']:TriggerCallback('admin:server:getplayers', function(players)
+    for k,v in pairs(players) do
       menu:AddButton({
         icon = '⭐',
         value = v,
         label = Lang:t('info.id') .. v.id .. ' | ' .. v.name,
         select = function(btn)
-          local select = btn.Value 
+          local select = btn.Value
           OpenPlayerMenu(select)
         end
       })
@@ -125,8 +125,8 @@ end)
 
 serverOptions:On('open', function(menu)
   menu:ClearItems()
-  QBCore.Functions.TriggerCallback('admin:server:hasperms', function(hasperms)
-    if hasperms then 
+  exports['qbr-core']:TriggerCallback('admin:server:hasperms', function(hasperms)
+    if hasperms then
       local menuSlider1 = menu:AddSlider({
         icon = '⛈️',
         label = Lang:t("menu.weather_options"),
@@ -463,21 +463,21 @@ OpenPlayerMenu = function(player)
     }
   }
 
-  for k,v in ipairs(elements) do 
+  for k,v in ipairs(elements) do
     playerMenu:AddButton({
       icon = v.icon,
       label = ' ' .. v.label,
       value = v.value,
       description = v.description,
       select = function(btn)
-        local values = btn.Value 
-        if values ~= 'ban' and values ~= 'kick' and values ~= 'perms' then 
+        local values = btn.Value
+        if values ~= 'ban' and values ~= 'kick' and values ~= 'perms' then
           TriggerServerEvent('admin:server:' .. values, player)
-        elseif values == 'ban' then 
+        elseif values == 'ban' then
           OpenBanMenu(player)
-        elseif values == 'kick' then 
+        elseif values == 'kick' then
           OpenKickMenu(player)
-        elseif values == 'perms' then 
+        elseif values == 'perms' then
           OpenPermsMenu(player)
         end
       end
@@ -567,12 +567,12 @@ OpenBanMenu = function(banplayer)
     value = 'ban',
     description = Lang:t('desc.confirm_ban'),
     select = function(btn)
-      if banreason ~= 'Unknown' and banlength ~= nil then 
+      if banreason ~= 'Unknown' and banlength ~= nil then
         TriggerServerEvent('admin:server:ban', banplayer, banlength, banreason)
         banreason = 'Unknown'
         banlength = nil
       else
-        QBCore.Functions.Notify(Lang:t('error.invalid_reason_length_ban'), 'error')
+        exports['qbr-core']:Notify(Lang:t('error.invalid_reason_length_ban'), 'error')
       end
     end
   })
@@ -597,19 +597,19 @@ OpenKickMenu = function(kickplayer)
     value = 'kick',
     description = Lang:t('desc.confirm_ban'),
     select = function(btn)
-      if kickreason ~= 'Unknown' then 
+      if kickreason ~= 'Unknown' then
         TriggerServerEvent('admin:server:kick', kickplayer, banreason)
         kickreason = 'Unknown'
       else
-        QBCore.Functions.Notify(Lang:t('error.missing_reason'), 'error')
+        exports['qbr-core']:Notify(Lang:t('error.missing_reason'), 'error')
       end
     end
   })
 end
 
 OpenPermsMenu = function(permsplayer)
-  QBCore.Functions.TriggerCallback('admin:server:hasperms', function(hasperms)
-    if hasperms then 
+  exports['qbr-core']:TriggerCallback('admin:server:hasperms', function(hasperms)
+    if hasperms then
       local permMenu = MenuV:CreateMenu(false, Lang:t('menu.perms'), menuLocation, 220, 20, 60, menuSize, 'qbcore', 'menuv', 'test8')
       permMenu:ClearItems()
       MenuV:OpenMenu(permMenu)
@@ -636,30 +636,30 @@ OpenPermsMenu = function(permsplayer)
         },
         change = function(item, newValue, oldValue)
           local vcal = newValue
-          if vcal == 1 then 
+          if vcal == 1 then
             selectedgroup = {}
             selectedgroup[#selectedgroup + 1] = {rank = 'user', label = 'User'}
-          elseif vcal == 2 then 
+          elseif vcal == 2 then
             selectedgroup = {}
             selectedgroup[#selectedgroup + 1] = {rank = 'admin', label = 'Admin'}
-          elseif vcal == 3 then 
+          elseif vcal == 3 then
             selectedgroup = {}
             selectedgroup[#selectedgroup + 1] = {rank = 'god', label = 'God'}
           end
         end
       })
-    
+
       permMenu:AddButton({
         label = Lang:t('info.confirm'),
         value = 'giveperms',
         description = 'Give the permission group',
         select = function(btn)
-          if selectedgroup ~= 'Unknown' then 
+          if selectedgroup ~= 'Unknown' then
             TriggerServerEvent('admin:server:setpermission', permsplayer.id, selectedgroup)
-            QBCore.Functions.Notify(Lang:t('success.changed_perms'), 'success')
+            exports['qbr-core']:Notify(Lang:t('success.changed_perms'), 'success')
             selectedgroup = 'Unknown'
           else
-            QBCore.Functions.Notify(Lang:t('error.changed_perm_failed'), 'error')
+            exports['qbr-core']:Notify(Lang:t('error.changed_perm_failed'), 'error')
           end
         end
       })
@@ -679,7 +679,7 @@ CopyToClipboard = function(dataType)
     SendNUIMessage({
         string = string.format('vector3(%s, %s, %s)', x, y, z)
     })
-    QBCore.Functions.Notify(Lang:t("success.coords_copied"), "success")
+    exports['qbr-core']:Notify(Lang:t("success.coords_copied"), "success")
   elseif dataType == 'coords4' then
     local coords = GetEntityCoords(ped)
     local x = round(coords.x, 2)
@@ -690,21 +690,21 @@ CopyToClipboard = function(dataType)
     SendNUIMessage({
         string = string.format('vector4(%s, %s, %s, %s)', x, y, z, h)
     })
-    QBCore.Functions.Notify(Lang:t("success.coords_copied"), "success")
+    exports['qbr-core']:Notify(Lang:t("success.coords_copied"), "success")
   elseif dataType == 'heading' then
     local heading = GetEntityHeading(ped)
     local h = round(heading, 2)
     SendNUIMessage({
         string = h
     })
-    QBCore.Functions.Notify(Lang:t("success.heading_copied"), "success")
-  end 
+    exports['qbr-core']:Notify(Lang:t("success.heading_copied"), "success")
+  end
 end
 
 ToggleShowCoordinates = function()
   ShowingCoords = not ShowingCoords
   CreateThread(function()
-    while ShowingCoords do 
+    while ShowingCoords do
       local coords = GetEntityCoords(PlayerPedId())
       local heading = GetEntityHeading(PlayerPedId())
       local c = {}
@@ -727,7 +727,7 @@ RevivePlayer = function()
   SetEntityHealth(ped, 200)
   ClearPedBloodDamage(ped)
   TriggerServerEvent('hud:server:RelieveStress', 100)
-  QBCore.Functions.Notify(Lang:t('info.health'))
+  exports['qbr-core']:Notify(Lang:t('info.health'))
 end
 
 HealPlayer = function()
@@ -744,8 +744,8 @@ ToggleNoclip = function()
 end
 
 GotoCoords = function(coords)
-  if type(coords) ~= 'vector3' then 
-    QBCore.Functions.Notify(Lang:t('error.invalid_coords'))
+  if type(coords) ~= 'vector3' then
+    exports['qbr-core']:Notify(Lang:t('error.invalid_coords'))
   end
 
   local x = coords[1]
@@ -754,26 +754,26 @@ GotoCoords = function(coords)
   local ped = PlayerPedId()
 
   DoScreenFadeOut(500)
-  while not IsScreenFadedOut() do 
+  while not IsScreenFadedOut() do
     Wait(0)
   end
 
   SetEntityCoords(ped, x, y, 100.0)
-  if z == 0 then 
+  if z == 0 then
     local _finalZ
     local delay = 500
-    for i = 1, 5 do 
-      if _finalZ ~= nil then 
-        break 
+    for i = 1, 5 do
+      if _finalZ ~= nil then
+        break
       end
 
       _finalZ = findZ(x, y)
-      if _z == nil then 
+      if _z == nil then
         Wait(delay)
       end
     end
 
-    if _finalZ ~= nil then 
+    if _finalZ ~= nil then
       z = _finalZ
     end
   end
@@ -784,10 +784,10 @@ end
 
 GotoMarker = function()
   local waypoint = GetWaypointCoords()
-  if waypoint.x ~= 0 and waypoint.y ~= 0 then 
+  if waypoint.x ~= 0 and waypoint.y ~= 0 then
     GotoCoords(vec3(waypoint.x, waypoint.y, 0))
   else
-    QBCore.Functions.Notify(Lang:t('error.invalid_coords'))
+    exports['qbr-core']:Notify(Lang:t('error.invalid_coords'))
   end
 end
 
@@ -796,7 +796,7 @@ round = function(input, decimalPlaces)
 end
 
 findZ = function(x, y)
-  local found = true 
+  local found = true
   local start_z = 1500
   local z = start_z
 
@@ -809,8 +809,8 @@ findZ = function(x, y)
     Wait(0)
   end
 
-  if z == start_z then 
-    return nil 
+  if z == start_z then
+    return nil
   end
 
   return z + 0.0
@@ -873,15 +873,15 @@ RegisterNetEvent('admin:client:spectate', function(targetPed, coords)
   local myPed = PlayerPedId()
   local targetPlayer =  GetPlayerFromServerId(targetPed)
   local target = GetPlayerPed(targetPlayer)
-  if not IsSpectating then 
-    IsSpectating = true 
+  if not IsSpectating then
+    IsSpectating = true
     SetEntityVisible(myPed, false)
     SetEntityInvincible(myPed, true)
     LastSpectateCoord = GetEntityCoords(myPed)
     SetEntityCoords(myPed, coords)
     NetworkIsInSpectatorMode(true, target)
   else
-    IsSpectating = false 
+    IsSpectating = false
     NetworkIsInSpectatorMode(false, target)
     SetEntityCoords(myPed, LastSpectateCoord)
     SetEntityVisible(myPed, true)

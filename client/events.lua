@@ -1,4 +1,4 @@
-local QBCore = exports['qbr-core']:GetCoreObject()
+
 local ShowBlips = false
 local ShowNames = false
 local names = {}
@@ -23,9 +23,9 @@ local gamerTagCompsEnum = {
 }
 
 CreateThread(function()
-  local sleep = 150 
-  while true do 
-    if ShowNames then 
+  local sleep = 150
+  while true do
+    if ShowNames then
       showNames()
       sleep = 50
     else
@@ -39,11 +39,11 @@ end)
 showNames = function()
   local curCoords = GetEntityCoords(PlayerPedId())
   local allActivePlayers = GetActivePlayers()
-  for _,i in ipairs(allActivePlayers) do 
+  for _,i in ipairs(allActivePlayers) do
     local targetPed = GetPlayerPed(i)
     local playerStr = '[' .. GetPlayerServerId(i) .. ']' .. ' ' .. GetPlayerName(i)
 
-    if not names[i] or not IsMpGamerTagActive(names[i].gamerTag) then 
+    if not names[i] or not IsMpGamerTagActive(names[i].gamerTag) then
       names[i] = {
         gamerTag = CreateFakeMpGamerTag(targetPed, playerStr, false, false, 0),
         ped = targetPed
@@ -57,9 +57,9 @@ end
 
 RegisterNetEvent('admin:client:toggleNames', function()
   ShowNames = not ShowNames
-  if not ShowNames then 
-    QBCore.Functions.Notify(Lang:t("error.names_deactivated"), "error")
+  if not ShowNames then
+    exports['qbr-core']:Notify(Lang:t("error.names_deactivated"), "error")
   else
-    QBCore.Functions.Notify(Lang:t("success.names_activated"), "success")
+    exports['qbr-core']:Notify(Lang:t("success.names_activated"), "success")
   end
 end)
