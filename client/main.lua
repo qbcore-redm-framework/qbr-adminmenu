@@ -572,7 +572,7 @@ OpenBanMenu = function(banplayer)
         banreason = 'Unknown'
         banlength = nil
       else
-        exports['qbr-core']:Notify(Lang:t('error.invalid_reason_length_ban'), 'error')
+        exports['qbr-core']:Notify(9, Lang:t('error.invalid_reason_length_ban'), 2000, 0, 'mp_lobby_textures', 'cross')
       end
     end
   })
@@ -601,7 +601,7 @@ OpenKickMenu = function(kickplayer)
         TriggerServerEvent('admin:server:kick', kickplayer, banreason)
         kickreason = 'Unknown'
       else
-        exports['qbr-core']:Notify(Lang:t('error.missing_reason'), 'error')
+        exports['qbr-core']:Notify(9, Lang:t('error.missing_reason'), 2000, 0, 'mp_lobby_textures', 'cross')
       end
     end
   })
@@ -656,10 +656,10 @@ OpenPermsMenu = function(permsplayer)
         select = function(btn)
           if selectedgroup ~= 'Unknown' then
             TriggerServerEvent('admin:server:setpermission', permsplayer.id, selectedgroup)
-            exports['qbr-core']:Notify(Lang:t('success.changed_perms'), 'success')
+            exports['qbr-core']:Notify(9, Lang:t('success.changed_perms'), 2000, 0, 'hud_textures', 'check')
             selectedgroup = 'Unknown'
           else
-            exports['qbr-core']:Notify(Lang:t('error.changed_perm_failed'), 'error')
+            exports['qbr-core']:Notify(9, Lang:t('error.changed_perm_failed'), 2000, 0, 'mp_lobby_textures', 'cross')
           end
         end
       })
@@ -679,7 +679,7 @@ CopyToClipboard = function(dataType)
     SendNUIMessage({
         string = string.format('vector3(%s, %s, %s)', x, y, z)
     })
-    exports['qbr-core']:Notify(Lang:t("success.coords_copied"), "success")
+    exports['qbr-core']:Notify(9, Lang:t("success.coords_copied"), 2000, 0, 'hud_textures', 'check')
   elseif dataType == 'coords4' then
     local coords = GetEntityCoords(ped)
     local x = round(coords.x, 2)
@@ -690,14 +690,14 @@ CopyToClipboard = function(dataType)
     SendNUIMessage({
         string = string.format('vector4(%s, %s, %s, %s)', x, y, z, h)
     })
-    exports['qbr-core']:Notify(Lang:t("success.coords_copied"), "success")
+    exports['qbr-core']:Notify(9, Lang:t("success.coords_copied"), 2000, 0, 'hud_textures', 'check')
   elseif dataType == 'heading' then
     local heading = GetEntityHeading(ped)
     local h = round(heading, 2)
     SendNUIMessage({
         string = h
     })
-    exports['qbr-core']:Notify(Lang:t("success.heading_copied"), "success")
+    exports['qbr-core']:Notify(9, Lang:t("success.heading_copied"), 2000, 0, 'hud_textures', 'check')
   end
 end
 
@@ -727,7 +727,7 @@ RevivePlayer = function()
   SetEntityHealth(ped, 200)
   ClearPedBloodDamage(ped)
   TriggerServerEvent('hud:server:RelieveStress', 100)
-  exports['qbr-core']:Notify(Lang:t('info.health'))
+  exports['qbr-core']:Notify(9, Lang:t('info.health'), 2000, 0, 'blips', 'blip_radius_search')
 end
 
 HealPlayer = function()
@@ -745,7 +745,7 @@ end
 
 GotoCoords = function(coords)
   if type(coords) ~= 'vector3' then
-    exports['qbr-core']:Notify(Lang:t('error.invalid_coords'))
+    exports['qbr-core']:Notify(9, Lang:t('error.invalid_coords'), 2000, 0, 'mp_lobby_textures', 'cross')
   end
 
   local x = coords[1]
@@ -787,7 +787,7 @@ GotoMarker = function()
   if waypoint.x ~= 0 and waypoint.y ~= 0 then
     GotoCoords(vec3(waypoint.x, waypoint.y, 0))
   else
-    exports['qbr-core']:Notify(Lang:t('error.invalid_coords'))
+    exports['qbr-core']:Notify(9, Lang:t('error.invalid_coords'), 2000, 0, 'mp_lobby_textures', 'cross')
   end
 end
 

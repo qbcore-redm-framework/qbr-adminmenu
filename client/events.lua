@@ -58,8 +58,8 @@ end
 RegisterNetEvent('admin:client:toggleNames', function()
   ShowNames = not ShowNames
   if not ShowNames then
-    exports['qbr-core']:Notify(Lang:t("error.names_deactivated"), "error")
+    exports['qbr-core']:Notify(9, Lang:t("error.names_deactivated"), 2000, 0, 'mp_lobby_textures', 'cross')
   else
-    exports['qbr-core']:Notify(Lang:t("success.names_activated"), "success")
+    exports['qbr-core']:Notify(9, Lang:t("success.names_activated"), 2000, 0, 'hud_textures', 'check')
   end
 end)
