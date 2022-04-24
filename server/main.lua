@@ -97,6 +97,10 @@ RegisterNetEvent('admin:server:heal', function(player)
   end
 end)
 
+RegisterNetEvent('admin:server:cloth', function(player)
+  TriggerClientEvent('qbr-clothing:client:openMenu', player.id,'all')
+end)
+
 RegisterNetEvent('admin:server:kick', function(player, reason)
   local src = source
   if exports['qbr-core']:HasPermission(src, permissions['kick']) or IsPlayerAceAllowed(src, 'command') then
