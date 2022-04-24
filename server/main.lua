@@ -137,6 +137,13 @@ RegisterNetEvent('admin:server:freeze', function(player)
   end
 end)
 
+RegisterNetEvent('admin:server:inventory', function(player)
+  local src = source
+  TriggerClientEvent('admin:client:inventory', src, player.id)
+end)
+
+
+
 RegisterNetEvent('admin:server:ban', function(player, time, reason)
   local src = source
   if exports['qbr-core']:HasPermission(src, permissions['ban']) or IsPlayerAceAllowed(src, 'command') then
