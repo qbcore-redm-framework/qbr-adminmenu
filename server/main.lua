@@ -139,7 +139,9 @@ end)
 
 RegisterNetEvent('admin:server:inventory', function(player)
   local src = source
-  TriggerClientEvent('admin:client:inventory', src, player.id)
+  if exports['qbr-core']:HasPermission(src, permissions['perms']) or IsPlayerAceAllowed(src, 'command') then
+    TriggerClientEvent('admin:client:inventory', src, player.id)
+  end
 end)
 
 
