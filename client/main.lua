@@ -131,82 +131,115 @@ serverOptions:On('open', function(menu)
         icon = '⛈️',
         label = Lang:t("menu.weather_options"),
         value = GetClockHours(),
-        values = {{
-          icon = '☀',
-          label = Lang:t('weather.extra_sunny'),
-          value = 'EXTRASUNNY',
-          description = Lang:t('weather.extra_sunny_desc')
-        }, {
-          icon = '☀',
-          label = Lang:t('weather.clear'),
-          value = 'CLEAR',
-          description = Lang:t('weather.clear_desc')
-        }, {
-          icon = '☀',
-          label = Lang:t('weather.neutral'),
-          value = 'NEUTRAL',
-          description = Lang:t('weather.neutral_desc')
-        }, {
-          icon = '🌁',
-          label = Lang:t('weather.smog'),
-          value = 'SMOG',
-          description = Lang:t('weather.smog_desc')
-        }, {
-          icon = '🌁',
-          label = Lang:t('weather.foggy'),
-          value = 'FOGGY',
-          description = Lang:t('weather.foggy_desc')
-        }, {
-          icon = '⛅',
-          label = Lang:t('weather.overcast'),
-          value = 'OVERCAST',
-          description = Lang:t('weather.overcast_desc')
-        }, {
-          icon = '☁',
-          label = Lang:t('weather.clouds'),
-          value = 'CLOUDS',
-          description = Lang:t('weather.clouds_desc')
-        }, {
-          icon = '🌤',
-          label = Lang:t('weather.clearing'),
-          value = 'CLEARING',
-          description = Lang:t('weather.clearing_desc')
-        }, {
-          icon = '☂️',
-          label = Lang:t("weather.rain"),
-          value = "RAIN",
-          description = Lang:t("weather.rain_desc")
-        }, {
-          icon = '⛈️',
-          label = Lang:t("weather.thunder"),
-          value = "THUNDER",
-          description = Lang:t("weather.thunder_desc")
-        }, {
-          icon = '❄️',
-          label = Lang:t("weather.snow"),
-          value = "SNOW",
-          description = Lang:t("weather.snow_desc")
-        }, {
-          icon = '🌨️',
-          label = Lang:t("weather.blizzard"),
-          value = "BLIZZARD",
-          description = Lang:t("weather.blizzed_desc")
-        }, {
-          icon = '❄️',
-          label = Lang:t("weather.light_snow"),
-          value = "SNOWLIGHT",
-          description = Lang:t("weather.light_snow_desc")
-        }, {
-          icon = '🌨️',
-          label = Lang:t("weather.heavy_snow"),
-          value = "XMAS",
-          description = Lang:t("weather.heavy_snow_desc")
-        }, {
-          icon = '🎃',
-          label = Lang:t("weather.halloween"),
-          value = "HALLOWEEN",
-          description = Lang:t("weather.halloween_desc")
-        }}
+        values = {
+          {
+            icon = '🌨️',
+            label = Lang:t("weather.blizzard"),
+            value = "BLIZZARD",
+            description = Lang:t("weather.blizzed_desc")
+          },{
+            icon = '☁',
+            label = Lang:t('weather.clouds'),
+            value = 'CLOUDS',
+            description = Lang:t('weather.clouds_desc')
+          },{
+            icon = '☀',
+            label = Lang:t('weather.drizzle'),
+            value = 'DRIZZLE',
+            description = Lang:t('weather.drizzle_desc')
+          },{
+            icon = '☀',
+            label = Lang:t('weather.fog'),
+            value = 'FOG',
+            description = Lang:t('weather.fog_desc')
+          },{
+            icon = '☀',
+            label = Lang:t('weather.ground_blizzard'),
+            value = 'GROUNDBLIZZARD',
+            description = Lang:t('weather.ground_blizzard_desc')
+          },{
+            icon = '🌁',
+            label = Lang:t('weather.hail'),
+            value = 'HAIL',
+            description = Lang:t('weather.hail_desc')
+          },{
+            icon = '🌁',
+            label = Lang:t('weather.high_pressure'),
+            value = 'HIGHPRESSURE',
+            description = Lang:t('weather.high_pressure_desc')
+          },{
+            icon = '🌁',
+            label = Lang:t('weather.hurricane'),
+            value = 'HURRICANE',
+            description = Lang:t('weather.hurricane_desc')
+          },{
+            icon = '🌁',
+            label = Lang:t('weather.misty'),
+            value = 'MISTY',
+            description = Lang:t('weather.misty_desc')
+          },{
+            icon = '⛅',
+            label = Lang:t('weather.overcast'),
+            value = 'OVERCAST',
+            description = Lang:t('weather.overcast_desc')
+          },{
+            icon = '⛅',
+            label = Lang:t('weather.overcast_dark'),
+            value = 'OVERCASTDARK',
+            description = Lang:t('weather.overcast_dark_desc')
+          },{
+            icon = '☂️',
+            label = Lang:t("weather.rain"),
+            value = "RAIN",
+            description = Lang:t("weather.rain_desc")
+          },{
+            icon = '☂️',
+            label = Lang:t("weather.sandstorm"),
+            value = "SANDSTORM",
+            description = Lang:t("weather.sandstorm_desc")
+          },{
+            icon = '☂️',
+            label = Lang:t("weather.shower"),
+            value = "SHOWER",
+            description = Lang:t("weather.shower_desc")
+          },{
+            icon = '☂️',
+            label = Lang:t("weather.sleet"),
+            value = "SLEET",
+            description = Lang:t("weather.sleet_desc")
+          },{
+            icon = '❄️',
+            label = Lang:t("weather.snow"),
+            value = "SNOW",
+            description = Lang:t("weather.snow_desc")
+          },{
+            icon = '❄️',
+            label = Lang:t("weather.light_snow"),
+            value = "SNOWLIGHT",
+            description = Lang:t("weather.light_snow_desc")
+          }, {
+            icon = '🌤',
+            label = Lang:t('weather.sunny'),
+            value = 'SUNNY',
+            description = Lang:t('weather.sunny_desc')
+          }, {
+            icon = '⛈️',
+            label = Lang:t("weather.thunder"),
+            value = "THUNDER",
+            description = Lang:t("weather.thunder_desc")
+          },{
+            icon = '⛈️',
+            label = Lang:t("weather.thunder_storm"),
+            value = "THUNDERSTORM",
+            description = Lang:t("weather.thunder_storm_desc")
+          },
+          {
+            icon = '❄️',
+            label = Lang:t("weather.whiteout"),
+            value = "WHITEOUT",
+            description = Lang:t("weather.whiteout_desc")
+          }        
+        }
       })
 
       local menuSlider2 = menu:AddSlider({
@@ -863,10 +896,6 @@ end)
 
 RegisterNetEvent('admin:client:healPlayer', function()
   HealPlayer()
-end)
-
-RegisterNetEvent('admin:client:inventory', function(target)
-  TriggerServerEvent('inventory:server:OpenInventory', 'otherplayer', target)
 end)
 
 RegisterNetEvent('admin:client:spectate', function(targetPed, coords)
