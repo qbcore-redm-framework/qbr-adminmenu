@@ -23,6 +23,11 @@ exports['qbr-core']:AddCommand('admin', 'Open the admin menu (Admin Only)', {}, 
   TriggerClientEvent('admin:client:OpenMenu', src)
 end, 'admin')
 
+exports['qbr-core']:AddCommand('noclip', 'No Clip (Admin Only)', {}, false, function(source)
+	local src = source
+	TriggerClientEvent('admin:client:ToggleNoClip', src)
+end, 'admin')
+
 exports['qbr-core']:CreateCallback('admin:server:hasperms', function(source, cb, action)
   local src = source
   if exports['qbr-core']:HasPermission(src, permissions[action]) or IsPlayerAceAllowed(src, 'command') then
