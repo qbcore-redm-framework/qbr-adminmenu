@@ -6,6 +6,7 @@ local permissions = {
   ['kill'] = 'admin',
   ['revive'] = 'admin',
   ['heal'] = 'admin',
+  ['bring'] = 'admin',
   ['goto'] = 'admin',
   ['freeze'] = 'admin',
   ['spectate'] = 'admin',
@@ -117,12 +118,24 @@ RegisterNetEvent('admin:server:kick', function(player, reason)
   end
 end)
 
+RegisterNetEvent('admin:server:bring', function(player) 
+  local src = source 
+  if exports['qbr-core']:HasPermission(src, permissions['bring']) or IsPlayerAceAllowed(src, 'command') then 
+    local admin = GetPlayerPed(src) 
+    local adminCoords = GetEntityCoords(admin) 
+    local target = GetPlayerPed(player.id) 
+    SetEntityCoords(target, adminCoords) 
+  end
+end)
+
 RegisterNetEvent('admin:server:goto', function(player)
   local src = source
   if exports['qbr-core']:HasPermission(src, permissions['goto']) or IsPlayerAceAllowed(src, 'command') then
+    local admin = GetPlayerPed(src)
     local target = GetPlayerPed(player.id)
     local targetCoords = GetEntityCoords(target)
-    TriggerClientEvent('admin:client:spectate', src, player.id, coords)
+    SetEntityCoords(admin, targetCoords)
+    --TriggerServerEvent("admin:client:goto", target)
   end
 end)
 
@@ -130,8 +143,9 @@ RegisterNetEvent('admin:server:spectate', function(player)
   local src = source
   if exports['qbr-core']:HasPermission(src, permissions['spectate']) or IsPlayerAceAllowed(src, 'command') then
     local admin = GetPlayerPed(src)
-    local target = GetEntityCoords(GetPlayerPed(player.id))
-    SetEntityCoords(admin, target)
+    local target = GetPlayerPed(player.id)
+    local coords = GetEntityCoords(target) 
+    TriggerClientEvent('admin:client:spectate', src, player.id, coords)
   end
 end)
 
