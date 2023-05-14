@@ -168,7 +168,7 @@ RegisterNetEvent('admin:server:ban', function(player, time, reason)
     end
     local timeTable = os.date('*t', banTime)
 
-    MySQL.Async.insert('INSERT INTO bans (name, license, discord, ip, reason, expire, bannedby) VALUES (?, ?, ?, ?, ?, ?, ?)', {
+    MySQL.insert.await('INSERT INTO bans (name, license, discord, ip, reason, expire, bannedby) VALUES (?, ?, ?, ?, ?, ?, ?)', {
       GetPlayerName(player.id),
       exports['qbr-core']:GetIdentifier(player.id, 'license'),
       exports['qbr-core']:GetIdentifier(player.id, 'discord'),
