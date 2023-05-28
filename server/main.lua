@@ -28,6 +28,18 @@ exports['qbr-core']:AddCommand('noclip', 'No Clip (Admin Only)', {}, false, func
 	TriggerClientEvent('admin:client:ToggleNoClip', src)
 end, 'admin')
 
+exports['qbr-core']:AddCommand('setammo', 'Set weapon ammo (Admin Only)', {{name='amount', help='Amount of bullets, for example: 20'}, {name='weapon', help='Name of the weapon, for example: WEAPON_REVOLVER_CATTLEMAN'}}, false, function(source, args)
+  local src = source
+  local weapon = args[2]
+  local amount = tonumber(args[1])
+
+  if weapon ~= nil then
+      TriggerClientEvent('admin:client:SetWeaponAmmoManual', src, weapon, amount)
+  else
+      TriggerClientEvent('admin:client:SetWeaponAmmoManual', src, 'current', amount)
+  end
+end, 'admin')
+
 exports['qbr-core']:CreateCallback('admin:server:hasperms', function(source, cb, action)
   local src = source
   if exports['qbr-core']:HasPermission(src, permissions[action]) or IsPlayerAceAllowed(src, 'command') then

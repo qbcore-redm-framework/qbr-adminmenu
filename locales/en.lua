@@ -68,6 +68,7 @@ local Translations = {
       ["warning_staff_message"] = "^8WARNING ^7 You have warned ",
       ["no_reason_specified"] = "No reason specified",
       ["server_restart"] = "Server restart, check our Discord for more information: ",
+      ["setammo"] = "Set ammo successfully",
   },
   menu = {
       ["admin_menu"] = "Admin Menu",
