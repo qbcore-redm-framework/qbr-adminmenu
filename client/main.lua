@@ -900,21 +900,29 @@ end)
 
 RegisterNetEvent('admin:client:spectate', function(targetPed, coords)
   local myPed = PlayerPedId()
-  local targetPlayer =  GetPlayerFromServerId(targetPed)
+  local targetPlayer = GetPlayerFromServerId(targetPed)
   local target = GetPlayerPed(targetPlayer)
+  local target2 = GetPlayerPed(targetPed)
+  local camera = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
   if not IsSpectating then
-    IsSpectating = true
+    AttachCamToEntity(camera, target, 0.0, -3.1, 1.0, false)
+    SetCamActive(camera, true)
+    RenderScriptCams(true, true, 1, true, true)
     SetEntityVisible(myPed, false)
     SetEntityInvincible(myPed, true)
     LastSpectateCoord = GetEntityCoords(myPed)
     SetEntityCoords(myPed, coords)
-    NetworkIsInSpectatorMode(true, target)
+    IsSpectating = true
+    --NetworkIsInSpectatorMode(true, target)
   else
-    IsSpectating = false
-    NetworkIsInSpectatorMode(false, target)
+    RenderScriptCams(true, false, 1, true, true)
+    DestroyCam(camera, true)
+    DestroyAllCams()
+    --NetworkIsInSpectatorMode(false, target)
     SetEntityCoords(myPed, LastSpectateCoord)
     SetEntityVisible(myPed, true)
     SetEntityInvincible(myPed, false)
     LastSpectateCoord = nil
+    IsSpectating = false
   end
 end)
