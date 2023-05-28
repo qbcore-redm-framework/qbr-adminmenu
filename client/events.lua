@@ -63,3 +63,22 @@ RegisterNetEvent('admin:client:toggleNames', function()
 		exports['qbr-core']:Notify(9, Lang:t("success.names_activated"), 5000, 0, 'hud_textures', 'check', 'COLOR_WHITE')
 	end
 end)
+
+RegisterNetEvent('admin:client:SetWeaponAmmoManual', function(weapon, ammo)
+  local ped = PlayerPedId()
+  if weapon ~= "current" then
+      weapon = weapon:upper()
+      SetPedAmmo(ped, GetHashKey(weapon), ammo)
+      exports['qbr-core']:Notify(9, Lang:t("info.setammo"), 5000, 0, 'mp_lobby_textures', 'check', 'COLOR_WHITE')
+  else
+      -- weapon = GetSelectedPedWeapon(ped)
+      local _, weaponHash = GetCurrentPedWeapon(ped)
+      weapon = weaponHash
+      if weapon ~= nil then
+          SetPedAmmo(ped, weapon, ammo)
+          exports['qbr-core']:Notify(9, Lang:t("info.setammo"), 5000, 0, 'mp_lobby_textures', 'check', 'COLOR_WHITE')
+      else
+        exports['qbr-core']:Notify(9, Lang:t("error.no_weapon"), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
+      end
+  end
+end)
