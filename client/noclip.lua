@@ -45,7 +45,6 @@ local function MoveInNoClip()
         (((right * input.x * speed) + (up * -input.z * speed) + (forward * -input.y * speed))), Timestep() * breakSpeed);
     c = c + previousVelocity
     SetEntityCoords(noClippingEntity, c - offset, true, true, true, false)
-
 end
 
 local function SetNoClip(val)
@@ -60,21 +59,7 @@ local function SetNoClip(val)
         end
         local isVeh = IsEntityAVehicle(noClippingEntity);
         isNoClipping = val;
-        -- if ENABLE_NO_CLIP_SOUND then
-        --     if isNoClipping then
-        --         PlaySoundFromEntity(-1, "SELECT", playerPed, "HUD_LIQUOR_STORE_SOUNDSET", 0, 0)
-        --     else
-        --         PlaySoundFromEntity(-1, "CANCEL", playerPed, "HUD_LIQUOR_STORE_SOUNDSET", 0, 0)
-        --     end
-        -- end
-        TriggerEvent('msgprinter:addMessage',
-            ((isNoClipping and ":airplane: No-clip enabled") or ":rock: No-clip disabled"), GetCurrentResourceName());
         if (isNoClipping) then
-            TriggerEvent('instructor:add-instruction', {MOVE_LEFT_RIGHT, MOVE_UP_DOWN}, "move", RESSOURCE_NAME);
-            TriggerEvent('instructor:add-instruction', {MOVE_UP_KEY, MOVE_DOWN_KEY}, "move up/down", RESSOURCE_NAME);
-            TriggerEvent('instructor:add-instruction', {1, 2}, "Turn", RESSOURCE_NAME);
-            TriggerEvent('instructor:add-instruction', CHANGE_SPEED_KEY, "(hold) fast mode", RESSOURCE_NAME);
-            TriggerEvent('instructor:add-instruction', NOCLIP_TOGGLE_KEY, "Toggle No-clip", RESSOURCE_NAME);
             SetEntityAlpha(noClippingEntity, 51, 0)
             -- Start a No CLip thread
             CreateThread(function()
@@ -131,14 +116,15 @@ local function SetNoClip(val)
             end)
         else
             ResetEntityAlpha(noClippingEntity)
-            TriggerEvent('instructor:flush', RESSOURCE_NAME);
         end
     end
 end
 
-function ToggleNoClipMode()
+local function ToggleNoClipMode()
     return SetNoClip(not isNoClipping)
 end
+
+RegisterNetEvent('admin:client:ToggleNoClip', ToggleNoClipMode)
 
 AddEventHandler('onResourceStop', function(resourceName)
     if resourceName == RESSOURCE_NAME then
@@ -151,8 +137,4 @@ AddEventHandler('onResourceStop', function(resourceName)
         ResetEntityAlpha(noClippingEntity);
         SetInvincible(false, noClippingEntity);
     end
-end)
-
-RegisterNetEvent('admin:client:ToggleNoClip', function()
-    ToggleNoClipMode()
 end)
