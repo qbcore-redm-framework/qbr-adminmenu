@@ -117,7 +117,7 @@ local Translations = {
         ["sit_in_vehicle"] = "Sit in vehicle", 
         ["open_inv"] = "Open Inventory",
         ["give_clothing_menu"] = "Give Clothing Menu",
-        ["hud_dev_mode"] = "Dev Mode (qb-hud)",
+        ["hud_dev_mode"] = "Dev Mode (qbr-hud)",
         ["tpm"] = "Teleport to Waypoint",
     },
     desc = {
