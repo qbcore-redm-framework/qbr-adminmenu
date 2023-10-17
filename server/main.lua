@@ -89,7 +89,7 @@ end)
 RegisterNetEvent('admin:server:kick', function(player, reason)
 	local src = source
 	if exports['qbr-core']:HasPermission(src, permissions['kick']) or IsPlayerAceAllowed(src, 'command') then
-		TriggerEvent('qb-log:server:CreateLog', 'bans', 'Player Kicked', 'red', string.format('%s was kicked by %s for %s', GetPlayerName(player.id), GetPlayerName(src), reason), true)
+		TriggerEvent('qbr-log:server:CreateLog', 'bans', 'Player Kicked', 'red', string.format('%s was kicked by %s for %s', GetPlayerName(player.id), GetPlayerName(src), reason), true)
 		DropPlayer(player.id, Lang:t("info.kicked_server") .. ':\n' .. reason .. '\n\n' .. Lang:t("info.check_discord") .. exports['qbr-core']:GetConfig().Discord)
 	end
 end)
@@ -163,7 +163,7 @@ RegisterNetEvent('admin:server:ban', function(player, time, reason)
 			args = {GetPlayerName(player.id), reason}
 		})
 
-		TriggerEvent('qb-log:server:CreateLog', 'bans', 'Player Banned', 'red', string.format('%s was banned by %s for %s', GetPlayerName(player.id), GetPlayerName(src), reason), true)
+		TriggerEvent('qbr-log:server:CreateLog', 'bans', 'Player Banned', 'red', string.format('%s was banned by %s for %s', GetPlayerName(player.id), GetPlayerName(src), reason), true)
 		if banTime >= 2147483647 then
 			DropPlayer(player.id, Lang:t("info.banned") .. '\n' .. reason .. Lang:t("info.ban_perm") .. exports['qbr-core']:GetConfig().Discord)
 		else
