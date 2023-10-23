@@ -485,7 +485,7 @@ adminOptions:On('open', function(menu)
 		icon = '🍪',
 		label = Lang:t('menu.tpm'),
 		select = function()
-			TriggerServerEvent('qbr-logs:server:CreateLog', 'admin', 'Admin Options', 'red', GetPlayerName() .. ' > REVIVED SELF <')
+			TriggerServerEvent('qbr-log:server:CreateLog', 'admin', 'Admin Options', 'red', GetPlayerName() .. ' > REVIVED SELF <')
 			GotoMarker()
 		end
 	})
@@ -493,7 +493,7 @@ adminOptions:On('open', function(menu)
 		icon = '🍪',
 		label = Lang:t('menu.revive'),
 		select = function()
-			TriggerServerEvent('qbr-logs:server:CreateLog', 'admin', 'Admin Options', 'red', GetPlayerName() .. ' > REVIVED SELF <')
+			TriggerServerEvent('qbr-log:server:CreateLog', 'admin', 'Admin Options', 'red', GetPlayerName() .. ' > REVIVED SELF <')
 			ExecuteCommand('revive')
 		end
 	})
@@ -501,7 +501,7 @@ adminOptions:On('open', function(menu)
 		icon = '🍪',
 		label = Lang:t('menu.heal'),
 		select = function()
-			TriggerServerEvent('qbr-logs:server:CreateLog', 'admin', 'Admin Options', 'red', GetPlayerName() .. ' > REVIVED SELF <')
+			TriggerServerEvent('qbr-log:server:CreateLog', 'admin', 'Admin Options', 'red', GetPlayerName() .. ' > REVIVED SELF <')
 			ExecuteCommand('heal')
 		end
 	})
@@ -510,7 +510,7 @@ adminOptions:On('open', function(menu)
 		value = Invisible,
 		label = Lang:t('menu.invisible'),
 		change = function()
-			TriggerServerEvent('qbr-logs:server:CreateLog', 'admin', 'Admin Options', 'red', GetPlayerName() .. ' toggled > INVISIBILITY <')
+			TriggerServerEvent('qbr-log:server:CreateLog', 'admin', 'Admin Options', 'red', GetPlayerName() .. ' toggled > INVISIBILITY <')
 			Invisible = not Invisible
 			SetEntityVisible(PlayerPedId(), not Invisible)
 		end
@@ -521,7 +521,7 @@ adminOptions:On('open', function(menu)
 		label = Lang:t('menu.god'),
 		change = function()
 			Godmode = not Godmode
-			TriggerServerEvent('qbr-logs:server:CreateLog', 'admin', 'Admin Options', 'red', GetPlayerName() .. ' toggled > GODMODE <')
+			TriggerServerEvent('qbr-log:server:CreateLog', 'admin', 'Admin Options', 'red', GetPlayerName() .. ' toggled > GODMODE <')
 			if not Godmode then return end
 			while Godmode do
 				Wait(0)
